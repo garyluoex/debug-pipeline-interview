@@ -41,6 +41,6 @@ def read_stations_fwf(stations_path):
 
 def read_states_fwf(states_path):
     states_columns = ["CODE", "STATE_NAME"]
-    column_specs = [(0, 2), (3, 51)]
+    column_specs = [(1, 2), (3, 51)]
 
     return pd.read_fwf(states_path, names=states_columns, colspecs=column_specs)

@@ -39,14 +39,12 @@ join_stations_and_states_task = PythonOperator(
     task_id="join_stations_and_states",
     python_callable=join_stations_and_states,
     op_kwargs={
-        "stations_path": "/root/data/ghcnd-stations.txt",
-        "states_path": "/root/data/ghcnd-states.txt",
+        "stations_path": "ghcnd-stations.txt",
+        "states_path": "ghcnd-states.txt",
         "output_path": "/root/data/stations-and-states.csv",
     },
     dag=dag,
 )
 
-join_stations_and_states_task.set_upstream(
-    [download_stations_data_task, download_states_data_task]
-)
-
+download_stations_data_task.set_downstream(download_states_data_task)
+download_states_data_task.set_downstream(join_stations_and_states_task)
